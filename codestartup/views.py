@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from .forms import PlaceForm
 
 
 # Create your views here.
@@ -38,3 +39,17 @@ def login(request):
             Error = 'Something went wrong!'
 
     return render(request, 'login.html', {})
+
+
+def create(request):
+    if request.method == 'POST':
+        place_form = PlaceForm(request.POST)
+        if place_form.is_valid():
+            place = place_form.save(commit=False)
+            place.save()
+            return redirect('/')
+        else:
+            error = 'Data is invalid!'
+
+    place_form = PlaceForm()
+    return render(request, 'create.html', {'place_form': place_form})
