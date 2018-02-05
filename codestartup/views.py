@@ -2,12 +2,14 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import PlaceForm
+from .models import Place
 
 
 # Create your views here.
 
 def home(request):
-    return render(request, 'home.html', {})
+    places = Place.objects.all
+    return render(request, 'home.html', {'places': places})
 
 
 def library(request):
@@ -41,11 +43,13 @@ def login(request):
     return render(request, 'login.html', {})
 
 
+## CREATE A NEW PLACE
 def create(request):
     if request.method == 'POST':
         place_form = PlaceForm(request.POST)
         if place_form.is_valid():
             place = place_form.save(commit=False)
+            place.user = request.user
             place.save()
             return redirect('/')
         else:
