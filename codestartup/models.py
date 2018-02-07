@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 class Place(models.Model):
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=1000)
+    image = models.FileField(upload_to='places', blank=True)
     user = models.ForeignKey(User)
 
 

@@ -45,15 +45,17 @@ def login(request):
 
 ## CREATE A NEW PLACE
 def create(request):
+    error = ''
     if request.method == 'POST':
-        place_form = PlaceForm(request.POST)
+        place_form = PlaceForm(request.POST, request.FILES)
         if place_form.is_valid():
             place = place_form.save(commit=False)
             place.user = request.user
             place.save()
             return redirect('/')
         else:
+            print(place_form.errors)
             error = 'Data is invalid!'
 
     place_form = PlaceForm()
-    return render(request, 'create.html', {'place_form': place_form})
+    return render(request, 'create.html', {'place_form': place_form, 'error': error})
