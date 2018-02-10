@@ -5,11 +5,40 @@ from .forms import PlaceForm
 from .models import Place
 
 
+
 # Create your views here.
 
 def home(request):
     places = Place.objects.all
     return render(request, 'home.html', {'places': places})
+
+def place_detail(request, id):
+
+    try:
+        place = Place.objects.get(id=id)
+    except Place.DoesNotExist:
+        return redirect('/')
+
+
+    return render(request, 'place_detail.html', {'place': place})
+
+def edit_place(request, id):
+    try:
+        place = Place.objects.get(id=id, user=request.user)
+        error = ""
+        if request.method == 'POST':
+            placeform = PlaceForm(request.POST, request.FILES, instance=place)
+            if placeform.is_valid():
+                place.save()
+                return redirect('/')
+            else:
+                error = "Data is invalid!"
+
+        return render(request, 'edit_place.html', {'place': place, 'error': error})
+    except Place.DoesNotExist:
+        return redirect('/')
+
+
 
 
 def library(request):

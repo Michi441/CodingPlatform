@@ -1,0 +1,61 @@
+
+
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+{% block page %}
+
+
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+
+
+    <div class="form-group">
+      <label class="col-sm-6 offset-3 control-label">
+        Place Title
+      </label>
+      <div class="col-sm-6 offset-3">
+        <textarea rows="3" class="form-control" name="title" placeholder="hello">
+
+        </textarea>
+      </div>
+    </div>
+
+
+  <div class="form-group">
+    <label class="col-sm-6 offset-3 control-label">
+      Description
+    </label>
+
+    <div class="col-sm-6 offset-3">
+      <textarea name="description" rows="3" class="form-control">
+
+
+
+      </textarea>
+
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="col-sm-6 offset-3 control-label">
+      Upload an Image
+    </label>
+
+
+    <input type="file" class="form-control" name="image">
+  </div>
+
+    <div class="form-group">
+      <div class="col-sm-6 offset-3">
+        <button type="submit" class="btn btn-outline-success">Update</button>
+      </div>
+    </div>
+
+  </form>
+
+
+
+
+{% endblock %}

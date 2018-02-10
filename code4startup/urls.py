@@ -28,6 +28,8 @@ urlpatterns = [
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^login/$', auth_views.login,{'template_name': 'login.html'}, name="login"),
     url(r'^logout/$', auth_views.logout, {'next_page': '/'}, name='logout'),
-    url(r'^create/$', views.create, name="create")
+    url(r'^create/$', views.create, name="create"),
+    url(r'^places/(?P<id>[0-9]+)/$', views.place_detail, name="place_detail"),
+    url(r'^edit_place/(?P<id>[0-9]+)/$', views.edit_place, name="edit_place"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
